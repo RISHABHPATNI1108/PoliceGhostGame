@@ -3,11 +3,13 @@ package com.example.gridwithpoliceandghost
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageView
-\import java.util.Random
+import java.util.Random
 
 
 class GridActivity : Activity() {
@@ -24,7 +26,14 @@ class GridActivity : Activity() {
 
         regenerateGrid(GRID_ROWS, GRID_COLUMNS)
 
-        findViewById<Button>(R.id.btn_generate).setOnClickListener { regenerateGrid(GRID_ROWS , GRID_COLUMNS) }
+        val button = findViewById<Button>(R.id.btn_generate)
+        button.setOnClickListener {
+            button.isEnabled = false
+            regenerateGrid(GRID_ROWS , GRID_COLUMNS)
+            Handler(Looper.getMainLooper()).postDelayed({
+                button.isEnabled = true
+            } , 2000)
+        }
 
     }
 
